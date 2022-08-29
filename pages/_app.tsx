@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from "../themes";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     /* El ThemeProvider es un componente de material para derle el modo a la página */
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Component {...pageProps} />
     </ThemeProvider>
