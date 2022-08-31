@@ -4,10 +4,13 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import AddButton from "@mui/icons-material/AddCircleOutlineOutlined";
 import { EntriesContext } from "../../context/entries";
+import { UIContext } from "../../context/ui";
 
 export const NewEntry = () => {
-  const [isAdding, setisAdding] = useState(false);
-
+  const { addNewEntry } = useContext(EntriesContext);
+  const {isAddingEntry ,setIsAddingEntry} = useContext(UIContext)
+  
+  //const [isAdding, setisAdding] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
@@ -15,19 +18,19 @@ export const NewEntry = () => {
     setInputValue(event.target.value);
   };
 
-  const { addNewEntry } = useContext(EntriesContext);
+  
 
   const onSave = () => {
     if (inputValue.length === 0) return;
     addNewEntry(inputValue);
-    setisAdding(false)
+    setIsAddingEntry(false);
     setInputValue("");
     setIsTouched(false);
   };
 
   return (
     <Box sx={{ marginBottom: 2, paddingX: 1 }}>
-      {isAdding ? (
+      {isAddingEntry ? (
         <>
           <TextField
             fullWidth
@@ -49,7 +52,7 @@ export const NewEntry = () => {
               variant="outlined"
               color="secondary"
               endIcon={<CancelOutlinedIcon />}
-              onClick={() => setisAdding(false)}
+              onClick={() => setIsAddingEntry(false)}
             >
               Cancelar
             </Button>
@@ -68,7 +71,7 @@ export const NewEntry = () => {
           endIcon={<AddButton />}
           fullWidth
           variant="outlined"
-          onClick={() => setisAdding(true)}
+          onClick={() => setIsAddingEntry(true)}
         >
           Agregar Tarea
         </Button>
