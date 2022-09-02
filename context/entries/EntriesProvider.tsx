@@ -8,28 +8,7 @@ export interface EntriesState {
 }
 
 const Entries_INITIAL_STATE: EntriesState = {
-  entries: [
-    {
-      _id: uuidv4(),
-      description:
-        "Pendiente: Duis qui irure consectetur proident consequat eu proident velit anim minim ad laborum id reprehenderit.",
-      status: "pending",
-      createdAt: Date.now(),
-    },
-    {
-      _id: uuidv4(),
-      description: "En progreso: Mollit adipisicing fugiat ad irure ut.",
-      status: "in-progress",
-      createdAt: Date.now() - 100000,
-    },
-    {
-      _id: uuidv4(),
-      description:
-        "Finalizada: Pariatur reprehenderit cupidatat laboris esse adipisicing esse ullamco quis elit amet exercitation exercitation.",
-      status: "finished",
-      createdAt: Date.now() - 1000000,
-    },
-  ],
+  entries: [],
 };
 
 export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
