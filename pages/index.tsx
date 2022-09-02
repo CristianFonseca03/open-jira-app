@@ -5,13 +5,14 @@ import { NewEntry } from "../components/ui";
 import { EntryList } from "../components/ui/EntryList";
 
 const HomePage: NextPage = () => {
+  console.log(process.env.NEXT_PUBLIC_CLIENT_KEY);
   return (
     <Layout title="Home-OpenJira">
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: "calc(100vh - 100px)" }}>
             <CardHeader title="Pendientes" />
-            <NewEntry/>
+            <NewEntry />
             <EntryList status={"pending"} />
           </Card>
         </Grid>
