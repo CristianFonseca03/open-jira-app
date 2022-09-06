@@ -15,7 +15,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             return res.status(400).json({ message: 'Enpoint no existe' })
     }
 
-
 }
 
 const getEntries = async (res: NextApiResponse<Data>) => {
