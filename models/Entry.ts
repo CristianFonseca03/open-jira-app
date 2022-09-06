@@ -12,7 +12,8 @@ const entrySchema = new Schema({
         enum: {
             values: ['pending', 'in-progress', 'finished'],
             message: '{VALUE} no es u estado permitido'
-        }
+        },
+        default: 'pending',
     }
 });
 
