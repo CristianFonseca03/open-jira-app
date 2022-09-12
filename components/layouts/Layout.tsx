@@ -4,7 +4,7 @@ import { FC } from "react";
 import { NavBar, SideBar } from "../ui";
 
 interface Props {
-  children: JSX.Element;
+  children: JSX.Element|JSX.Element[];
   title?: string;
 }
 
