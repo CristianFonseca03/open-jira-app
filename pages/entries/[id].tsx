@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo, FC } from "react";
+import { useState, ChangeEvent, useMemo, FC, useContext } from "react";
 import { GetServerSideProps } from "next";
 import {
   capitalize,
@@ -19,11 +19,11 @@ import {
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-import { isValidObjectId } from "mongoose";
-
 import { dbEntries } from "../../database";
 import { Layout } from "../../components/layouts";
 import { Entry, EntryStatus } from "../../interfaces";
+import { EntriesContext } from "../../context/entries/EntriesContext";
+import { useRouter } from "next/router";
 
 const validStatus: EntryStatus[] = ["pending", "in-progress", "finished"];
 
@@ -31,12 +31,12 @@ interface Props {
   entry: Entry;
 }
 
-export const EntryPage: FC<Props> = (props) => {
-  const [inputValue, setInputValue] = useState("");
-  const [status, setStatus] = useState<EntryStatus>("pending");
+export const EntryPage: FC<Props> = ({ entry }) => {
+  const [inputValue, setInputValue] = useState(entry.description);
+  const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
-
-  console.log(props)
+  const { updateEntry, deleteEntry } = useContext(EntriesContext);
+  const router = useRouter();
 
   const isNotValid = useMemo(
     () => inputValue.length <= 0 && touched,
@@ -52,17 +52,29 @@ export const EntryPage: FC<Props> = (props) => {
   };
 
   const onSave = () => {
-    console.log({ inputValue, status });
+    if (inputValue.trim().length === 0) return;
+
+    const updatedEntry: Entry = {
+      ...entry,
+      status,
+      description: inputValue,
+    };
+    updateEntry(updatedEntry, true);
+  };
+
+  const onDelete = () => {
+    deleteEntry(entry, true);
+    router.push("/");
   };
 
   return (
-    <Layout title="Entradas">
+    <Layout title={inputValue.substring(0, 20) + "..."}>
       <Grid container justifyContent="center" sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={8} md={6}>
           <Card>
             <CardHeader
-              title={`Entrada: ${inputValue}`}
-              subheader={`Creada hace ... minutos`}
+              title={`Entrada:`}
+              subheader={`Creada hace ${entry.createdAt} minutos`}
             />
           </Card>
           <CardContent>
@@ -113,6 +125,7 @@ export const EntryPage: FC<Props> = (props) => {
           right: 30,
           backgroundColor: "error.dark",
         }}
+        onClick={onDelete}
       >
         <DeleteOutlineOutlinedIcon />
       </IconButton>
@@ -136,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      entry: entry
+      entry: entry,
     },
   };
 };

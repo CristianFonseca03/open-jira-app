@@ -4,6 +4,7 @@ import { EntriesState } from './';
 type EntriesActionType =
     | { type: '[Entry] Add-Entry', payload: Entry }
     | { type: '[Entry] Entry-Updated', payload: Entry }
+    | { type: '[Entry] Entry-Deleted', payload: Entry }
     | { type: '[Entry] Refresh-Data', payload: Entry[] }
 
 /* Creo el case de la nueva entrada, que posteriormente tendré que usar en EntriesProvider */
@@ -14,6 +15,11 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
             return {
                 ...state,
                 entries: [...state.entries, action.payload]
+            }
+        case '[Entry] Entry-Deleted':
+            return {
+                ...state,
+                entries: state.entries.filter(entry => entry._id !== action.payload._id)
             }
         case '[Entry] Entry-Updated':
             return {
@@ -31,7 +37,6 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
                 ...state,
                 entries: [...action.payload]
             }
-
         default:
             return state;
     }
