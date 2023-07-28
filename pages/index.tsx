@@ -6,7 +6,7 @@ import { EntryList } from "../components/ui/EntryList";
 
 const HomePage: NextPage = () => {
   return (
-    <Layout title="Home-OpenJira">
+    <Layout title="SecureDocs">
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: "calc(100vh - 100px)" }}>

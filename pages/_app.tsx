@@ -8,19 +8,21 @@ import { EntriesProvider } from "../context/entries/";
 
 import { lightTheme, darkTheme } from "../themes";
 
-function MyApp({ Component, pageProps }: AppProps) {
+import { SessionProvider } from "next-auth/react";
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    /* El ThemeProvider es un componente de material para derle el modo a la
-      página */
     <SnackbarProvider maxSnack={3}>
-      <EntriesProvider>
-        <UIProvider>
-          <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </UIProvider>
-      </EntriesProvider>
+      <SessionProvider session={session}>
+        <EntriesProvider>
+          <UIProvider>
+            <ThemeProvider theme={darkTheme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </UIProvider>
+        </EntriesProvider>
+      </SessionProvider>
     </SnackbarProvider>
   );
 }
