@@ -27,7 +27,7 @@ export default NextAuth({
         return {
           id: data.user.id,
           email: credentials.email,
-          user: { ...data.user, token: data.token },
+          image: data.user.firstLogin,
           token: data.token,
         };
       },

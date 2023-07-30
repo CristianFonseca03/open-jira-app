@@ -10,7 +10,6 @@ import { Layout } from "../components/layouts";
 import { NewEntry, EntryList } from "../components/ui";
 import AccessDenied from "../components/ui/AccessDenied";
 
-
 const HomePage: NextPage = () => {
   const { data: session, status } = useSession();
   const [isValidToken, setIsValidToken] = useState(false);

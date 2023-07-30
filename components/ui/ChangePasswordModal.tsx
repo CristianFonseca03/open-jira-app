@@ -35,7 +35,7 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
 
   const changePassword = async () => {
     const resp = await fetch(
-      `${process.env.BACKEND_URL}auth/change-pass/${email}`, {
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/change-pass/${email}`, {
         headers: {
           'Content-Type': 'application/json'
         },

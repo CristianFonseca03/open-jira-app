@@ -27,7 +27,7 @@ export const ForgotPassword: FC<Props> = ({ open, setOpen }) => {
 
   const restorePassword = async () => {
     const resp = await fetch(
-      `${process.env.BACKEND_URL}user/forgot-password`, {
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}user/forgot-password`, {
         headers: {
           'Content-Type': 'application/json'
         },

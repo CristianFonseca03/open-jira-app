@@ -24,6 +24,8 @@ interface formProps {
 
 export const LogInForm = () => {
   const { data: session } = useSession();
+
+
   const router = useRouter();
   const [form, setForm] = useState<formProps>({
     email: "",
@@ -52,7 +54,6 @@ export const LogInForm = () => {
   const loginUser = async () => {
     await signIn("credentials", {
       ...form,
-      //  callbackUrl: showModal ? `${window.location.origin}/` : '',
     });
   };
 
@@ -185,7 +186,7 @@ export const LogInForm = () => {
       <ChangePasswordModal
         open={showModal}
         setOpen={setShowModal}
-        email={session?.user?.email || ""}
+        email={form.email || ""}
       />
       <ForgotPassword open={openPassword} setOpen={setOpenPassword} />
     </Grid>
