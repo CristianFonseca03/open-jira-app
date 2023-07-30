@@ -1,48 +1,34 @@
 import NextAuth, { SessionStrategy } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-declare module "next-auth" {
-  interface Session {
-    id: string;
-  }
-}
-
 export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "Email",
-          placeholder: "correo@uptc.edu.co",
-        },
+        email: { label: "Email", type: "Email" },
         password: { label: "Password", type: "password" },
         token: { label: "token", type: "Text" },
       },
       authorize: async (credentials) => {
+        console.log("credentials", credentials);
         if (!credentials) return null;
 
-        const resp = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/sign-in`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(credentials),
-            method: "POST",
-          }
-        );
+        const resp = await fetch(`${process.env.BACKEND_URL}auth/sign-in`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+          method: "POST",
+        });
         const data = await resp.json();
-
         if (!data.success) return null;
 
         return {
-          id: data.user.id, // Assuming that your backend returns the user's id
+          id: data.user.id,
           email: credentials.email,
-          user: data.user,
+          user: { ...data.user, token: data.token },
           token: data.token,
-          image: data.user.firstLogin,
         };
       },
     }),
@@ -55,11 +41,11 @@ export default NextAuth({
       return token;
     },
     session: ({ token, session }) => {
-      if (token) {
-        session.id = token.id;
+      if (token && token.id) {
+        session.user = token.id;
       }
       return session;
-    }
+    },
   },
   secret: "test",
   session: {

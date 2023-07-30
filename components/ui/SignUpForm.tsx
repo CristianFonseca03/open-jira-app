@@ -43,13 +43,16 @@ export const SignUpForm = () => {
   };
 
   const registerUser = async () => {
-    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/sign-up`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-      method: "POST",
-    });
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/sign-up`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+        method: "POST",
+      }
+    );
     const data = await resp.json();
     if (data.success) {
       setMessage(data.message);
@@ -81,13 +84,15 @@ export const SignUpForm = () => {
   };
 
   return (
-    <Grid container width={"50%"} spacing={4} pt={4}>
+    <Grid container spacing={4} pt={4}>
       <Grid item xs={6}>
         <TextField
           type={"text"}
           placeholder={"Nombre"}
           fullWidth
-          helperText={form.name.length <= 0 && touched && "El nombre es requerido"}
+          helperText={
+            form.name.length <= 0 && touched && "El nombre es requerido"
+          }
           error={form.name.length <= 0 && touched}
           InputProps={{
             endAdornment: <BadgeOutlinedIcon />,
@@ -120,7 +125,9 @@ export const SignUpForm = () => {
           placeholder={"Correo"}
           fullWidth
           helperText={
-            !isValidEmail.test(form.email) && touched && "No es un correo válido es válido"
+            !isValidEmail.test(form.email) &&
+            touched &&
+            "No es un correo válido es válido"
           }
           error={!isValidEmail.test(form.email) && touched}
           name={"email"}

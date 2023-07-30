@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function AccessDenied() {
   return (
-    <Layout title={"Access-Restricted"}>
+    <Layout title={"Acceso Restringido"}>
       <Box
         width={"100%"}
         height={"100%"}
@@ -14,7 +14,7 @@ export default function AccessDenied() {
         flexDirection={"column"}
       >
         <Box>
-          <Typography>you don&apos;t have access</Typography>
+          <Typography>No tienes acceso</Typography>
           <br />
           <Link href={"/log-in"} passHref>
             <Button
@@ -25,7 +25,7 @@ export default function AccessDenied() {
                 width: "10rem",
               }}
             >
-              Log in
+              Iniciar sesión
             </Button>
           </Link>
         </Box>
