@@ -6,6 +6,9 @@ import {
   TextField
 } from '@mui/material';
 
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+
+
 interface Props {
   open: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -46,10 +49,10 @@ export const ForgotPassword: FC<Props> = ({ open, setOpen }) => {
 
   return (<>
     <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle>Forgot the password</DialogTitle>
+      <DialogTitle>¿Olvidaste tu contraseña?</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Set your Email
+          Danos tu correo electrónico y te enviaremos una contraseña temporal para restablecer tu contraseña.
         </DialogContentText>
         <TextField
           margin={'normal'}
@@ -57,6 +60,9 @@ export const ForgotPassword: FC<Props> = ({ open, setOpen }) => {
           placeholder={'Email'}
           fullWidth
           name={'confirmEmail'}
+          InputProps={{
+            endAdornment: <EmailOutlinedIcon />,
+          }}
           onBlur={() => setTouched(true)}
           onChange={handlerEmail}
         />
@@ -64,11 +70,11 @@ export const ForgotPassword: FC<Props> = ({ open, setOpen }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>
-          Cancel
+          Cancelar
         </Button>
         <Button
           onClick={restorePassword}>
-          send Email
+          Enviar correo
         </Button>
       </DialogActions>
       {

@@ -9,7 +9,7 @@ const AccessDeniedPage: NextPage = () => {
     return <AccessDenied />;
   }
 
-  return <h1>page not found</h1>;
+  return <h1>Página no encontrada</h1>;
 };
 
 export default AccessDeniedPage;

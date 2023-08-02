@@ -37,7 +37,6 @@ export const LogInForm = () => {
   const [message, setMessage] = useState("");
   const [touched, setTouched] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   let isValidForm = true;
 
   //TODO: validate route

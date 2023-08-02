@@ -11,7 +11,6 @@ export default NextAuth({
         token: { label: "token", type: "Text" },
       },
       authorize: async (credentials) => {
-        console.log("credentials", credentials);
         if (!credentials) return null;
 
         const resp = await fetch(`${process.env.BACKEND_URL}auth/sign-in`, {
@@ -50,12 +49,12 @@ export default NextAuth({
   secret: "test",
   session: {
     strategy: "jwt" as SessionStrategy,
-    maxAge: 30,
+    maxAge: 180,
   },
   jwt: {
     secret: "test",
     // encryption: true
-    maxAge: 30,
+    maxAge: 180,
   },
   pages: {
     signIn: "/log-in",

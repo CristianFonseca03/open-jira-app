@@ -1,10 +1,10 @@
-import { Layout } from "../layouts";
+import { Layout, SignLayout } from "../layouts";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 
 export default function AccessDenied() {
   return (
-    <Layout title={"Acceso Restringido"}>
+    <SignLayout title={"Acceso Restringido"}>
       <Box
         width={"100%"}
         height={"100%"}
@@ -14,7 +14,7 @@ export default function AccessDenied() {
         flexDirection={"column"}
       >
         <Box>
-          <Typography>No tienes acceso</Typography>
+          <Typography variant="h6">No tienes acceso a SecureDocs</Typography>
           <br />
           <Link href={"/log-in"} passHref>
             <Button
@@ -22,7 +22,7 @@ export default function AccessDenied() {
               style={{
                 borderRadius: "50px",
                 padding: "12px 0",
-                width: "10rem",
+                width: "19rem",
               }}
             >
               Iniciar sesión
@@ -30,6 +30,6 @@ export default function AccessDenied() {
           </Link>
         </Box>
       </Box>
-    </Layout>
+    </SignLayout>
   );
 }
