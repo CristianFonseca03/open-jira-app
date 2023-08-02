@@ -25,7 +25,6 @@ interface formProps {
 export const LogInForm = () => {
   const { data: session } = useSession();
 
-
   const router = useRouter();
   const [form, setForm] = useState<formProps>({
     email: "",
@@ -132,7 +131,7 @@ export const LogInForm = () => {
           //TODO: create modal for send email
         }
         <Typography
-          pt={2}
+          mt={2}
           style={{ cursor: "pointer" }}
           onClick={() => {
             setOpenPassword(true);
@@ -140,33 +139,32 @@ export const LogInForm = () => {
         >
           ¿Olvidaste tu contraseña?
         </Typography>
-      </Grid>
-      <Grid item xs={6}>
-        <Link href={"/sign-up"} passHref>
-          <Button
-            fullWidth
-            variant={"contained"}
-            style={{ borderRadius: "50px", padding: "12px 0" }}
+        <Link href={"/sign-up"}>
+          <Typography
+            mt={2}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setOpenPassword(true);
+            }}
           >
-            Registrate
-          </Button>
+            ¿No estas registrado? Regístrate
+          </Typography>
         </Link>
       </Grid>
-      <Grid item xs={6}>
-        <Button
-          fullWidth
-          variant={"contained"}
-          style={{
-            borderRadius: "50px",
-            padding: "12px 0",
-            backgroundColor: !validForm() ? "#4a148c" : "",
-          }}
-          onClick={loginUser}
-          disabled={validForm()}
-        >
-          Iniciar Sesión
-        </Button>
-      </Grid>
+      <Button
+        fullWidth
+        variant={"contained"}
+        style={{
+          borderRadius: "50px",
+          padding: "12px 0",
+          backgroundColor: !validForm() ? "#4a148c" : "",
+          marginTop: "20px",
+        }}
+        onClick={loginUser}
+        disabled={validForm()}
+      >
+        Iniciar Sesión
+      </Button>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}

@@ -77,9 +77,8 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Change Password</DialogTitle>
+      <DialogTitle>Cambia tu contraseña</DialogTitle>
       <DialogContent>
-        <DialogContentText>Cambia tu contraseña</DialogContentText>
         <TextField
           autoComplete={"off"}
           type={"text"}
@@ -100,12 +99,12 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
           id={"change-password"}
           margin={"normal"}
           type={"password"}
-          placeholder={"Password"}
+          placeholder={"Contraseña"}
           fullWidth
           helperText={
             !isValidPassword.test(form.password) &&
             touched &&
-            "Password is not secure"
+            "Contraseña no es válida"
           }
           error={!isValidPassword.test(form.password) && touched}
           name={"password"}
@@ -118,12 +117,12 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
         <TextField
           margin={"normal"}
           type={"password"}
-          placeholder={"Password"}
+          placeholder={"Confirmar contraseña"}
           fullWidth
           helperText={
             form.password !== form.confirmPassword &&
             touched &&
-            "Passwords do not match"
+            "Las contraseñas no coinciden"
           }
           error={form.password !== form.confirmPassword && touched}
           name={"confirmPassword"}
@@ -135,7 +134,7 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Cancelar</Button>
         <Button
           disabled={
             form.password !== form.confirmPassword ||
@@ -143,7 +142,7 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
           }
           onClick={changePassword}
         >
-          change Password
+          Cambiar contraseña
         </Button>
       </DialogActions>
     </Dialog>

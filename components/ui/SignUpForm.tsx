@@ -3,15 +3,19 @@ import Link from "next/link";
 import {
   Alert,
   AlertColor,
+  Box,
   Button,
+  CircularProgress,
   Grid,
   Snackbar,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { emailRegExp as isValidEmail } from "../../utils";
+import { ArrowBack } from "@mui/icons-material";
 
 interface formProps {
   name: string;
@@ -29,6 +33,7 @@ export const SignUpForm = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [touched, setTouched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   let isValidForm = true;
   const router = useRouter();
 
@@ -43,6 +48,7 @@ export const SignUpForm = () => {
   };
 
   const registerUser = async () => {
+    setIsLoading(true);
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/sign-up`,
       {
@@ -57,11 +63,14 @@ export const SignUpForm = () => {
     if (data.success) {
       setMessage(data.message);
       setSnackBarStatus("success");
-      router.push("/log-in");
+      setTimeout(() => {
+        router.push("/log-in");
+      }, 2000);
     } else {
       setSnackBarStatus("error");
       setMessage(data.message);
     }
+    setIsLoading(false);
     setOpen(true);
   };
 
@@ -83,103 +92,111 @@ export const SignUpForm = () => {
     return !isValidForm;
   };
 
+  if (isLoading) return <CircularProgress />;
+
   return (
-    <Grid container spacing={4} pt={4}>
-      <Grid item xs={6}>
-        <TextField
-          type={"text"}
-          placeholder={"Nombre"}
-          fullWidth
-          helperText={
-            form.name.length <= 0 && touched && "El nombre es requerido"
-          }
-          error={form.name.length <= 0 && touched}
-          InputProps={{
-            endAdornment: <BadgeOutlinedIcon />,
-          }}
-          name={"name"}
-          onBlur={() => setTouched(true)}
-          onChange={handlerForm}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          type={"text"}
-          placeholder={"Apellido"}
-          fullWidth
-          helperText={
-            form.lastName.length <= 0 && touched && "El apellido es requerido"
-          }
-          error={form.lastName.length <= 0 && touched}
-          name={"lastName"}
-          InputProps={{
-            endAdornment: <BadgeOutlinedIcon />,
-          }}
-          onBlur={() => setTouched(true)}
-          onChange={handlerForm}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          type={"text"}
-          placeholder={"Correo"}
-          fullWidth
-          helperText={
-            !isValidEmail.test(form.email) &&
-            touched &&
-            "No es un correo válido es válido"
-          }
-          error={!isValidEmail.test(form.email) && touched}
-          name={"email"}
-          InputProps={{
-            endAdornment: <EmailOutlinedIcon />,
-          }}
-          onBlur={() => setTouched(true)}
-          onChange={handlerForm}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <Link href={"/log-in"} passHref>
+    <Box>
+      <Typography variant={"h4"} py={2}>
+        Crea una nueva cuenta
+      </Typography>
+      <Grid container spacing={4} pt={4}>
+        <Grid item xs={6}>
+          <TextField
+            type={"text"}
+            placeholder={"Nombre"}
+            fullWidth
+            helperText={
+              form.name.length <= 0 && touched && "El nombre es requerido"
+            }
+            error={form.name.length <= 0 && touched}
+            InputProps={{
+              endAdornment: <BadgeOutlinedIcon />,
+            }}
+            name={"name"}
+            onBlur={() => setTouched(true)}
+            onChange={handlerForm}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            type={"text"}
+            placeholder={"Apellido"}
+            fullWidth
+            helperText={
+              form.lastName.length <= 0 && touched && "El apellido es requerido"
+            }
+            error={form.lastName.length <= 0 && touched}
+            name={"lastName"}
+            InputProps={{
+              endAdornment: <BadgeOutlinedIcon />,
+            }}
+            onBlur={() => setTouched(true)}
+            onChange={handlerForm}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type={"text"}
+            placeholder={"Correo"}
+            fullWidth
+            helperText={
+              !isValidEmail.test(form.email) &&
+              touched &&
+              "No es un correo válido es válido"
+            }
+            error={!isValidEmail.test(form.email) && touched}
+            name={"email"}
+            InputProps={{
+              endAdornment: <EmailOutlinedIcon />,
+            }}
+            onBlur={() => setTouched(true)}
+            onChange={handlerForm}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Link href={"/log-in"} passHref>
+            <Button
+              fullWidth
+              variant={"contained"}
+              style={{ borderRadius: "50px", padding: "12px 0" }}
+              onClick={handleClick}
+              startIcon={<ArrowBack />}
+            >
+              Iniciar sesión
+            </Button>
+          </Link>
+        </Grid>
+        <Grid item xs={6}>
           <Button
             fullWidth
             variant={"contained"}
-            style={{ borderRadius: "50px", padding: "12px 0" }}
-            onClick={handleClick}
+            style={{
+              borderRadius: "50px",
+              padding: "12px 0",
+              backgroundColor: !validForm() ? "#4a148c" : "",
+            }}
+            onClick={registerUser}
+            disabled={validForm()}
           >
-            Iniciar sesión
+            Crear cuenta
           </Button>
-        </Link>
-      </Grid>
-      <Grid item xs={6}>
-        <Button
-          fullWidth
-          variant={"contained"}
-          style={{
-            borderRadius: "50px",
-            padding: "12px 0",
-            backgroundColor: !validForm() ? "#4a148c" : "",
-          }}
-          onClick={registerUser}
-          disabled={validForm()}
-        >
-          Crear cuenta
-        </Button>
-      </Grid>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        onClose={handleClose}
-        message="I love snacks"
-        key={"top-center"}
-      >
-        <Alert
+        </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={open}
           onClose={handleClose}
-          severity={snackBarStatus}
-          sx={{ width: "100%" }}
+          message="I love snacks"
+          key={"top-center"}
         >
-          {message}
-        </Alert>
-      </Snackbar>
-    </Grid>
+          <Alert
+            onClose={handleClose}
+            severity={snackBarStatus}
+            sx={{ width: "100%" }}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+      </Grid>
+    </Box>
   );
 };
