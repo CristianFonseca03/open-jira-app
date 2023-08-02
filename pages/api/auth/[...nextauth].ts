@@ -13,13 +13,16 @@ export default NextAuth({
       authorize: async (credentials) => {
         if (!credentials) return null;
 
-        const resp = await fetch(`${process.env.BACKEND_URL}auth/sign-in`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-          method: "POST",
-        });
+        const resp = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/sign-in`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(credentials),
+            method: "POST",
+          }
+        );
         const data = await resp.json();
         if (!data.success) return null;
 

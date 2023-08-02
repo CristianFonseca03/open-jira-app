@@ -57,7 +57,7 @@ export const SignUpForm = () => {
     if (data.success) {
       setMessage(data.message);
       setSnackBarStatus("success");
-      router.push("/sign-in");
+      router.push("/log-in");
     } else {
       setSnackBarStatus("error");
       setMessage(data.message);

@@ -17,7 +17,7 @@ const HomePage: NextPage = () => {
   useEffect(() => {
     const verifyToken = async () => {
       const tokenResponse = await fetch(
-        `${process.env.BACKEND_URL}auth/validate-jwt`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/validate-jwt`,
         {
           headers: {
             "Content-Type": "application/json",

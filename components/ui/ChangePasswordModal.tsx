@@ -21,7 +21,7 @@ interface Props {
 }
 
 interface formProps {
-  email: string,
+  email: string;
   password: string;
   confirmPassword: string;
 }
