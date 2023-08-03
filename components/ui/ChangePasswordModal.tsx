@@ -1,5 +1,6 @@
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -21,13 +22,16 @@ interface Props {
 }
 
 interface formProps {
-  email: string,
+  email: string;
   password: string;
   confirmPassword: string;
 }
 
 export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
   const [touched, setTouched] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState("");
+
   const [form, setForm] = useState<formProps>({
     email: "",
     confirmPassword: "",
@@ -38,6 +42,7 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
   const handleClose = () => {
     setOpen(false);
     setTouched(false);
+    setShowMessage(false);
   };
 
   const changePassword = async () => {
@@ -52,6 +57,12 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
       }
     );
     const data = await resp.json().catch((e) => console.log(e));
+    setMessage(
+      data.message ||
+        "Error al cambiar la contraseña"
+    );
+    setShowMessage(true);
+
     if (data.success) {
       sessionStorage.setItem("token", data.token);
       router.push("/");
@@ -77,9 +88,8 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Change Password</DialogTitle>
+      <DialogTitle>Cambia tu contraseña</DialogTitle>
       <DialogContent>
-        <DialogContentText>Cambia tu contraseña</DialogContentText>
         <TextField
           autoComplete={"off"}
           type={"text"}
@@ -135,7 +145,7 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Cancelar</Button>
         <Button
           disabled={
             form.password !== form.confirmPassword ||
@@ -143,9 +153,19 @@ export const ChangePasswordModal: FC<Props> = ({ open, setOpen, email }) => {
           }
           onClick={changePassword}
         >
-          change Password
+          Cambiar contraseña
         </Button>
       </DialogActions>
+      {showMessage && (
+        <Alert
+          onClose={handleClose}
+          severity={"warning"}
+          style={{ zIndex: 99 }}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      )}
     </Dialog>
   );
 };

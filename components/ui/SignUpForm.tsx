@@ -60,7 +60,7 @@ export const SignUpForm = () => {
       router.push("/sign-in");
     } else {
       setSnackBarStatus("error");
-      setMessage(data.message);
+      setMessage(data.message || "Error al crear el usuario");
     }
     setOpen(true);
   };

@@ -38,7 +38,7 @@ export const ForgotPassword: FC<Props> = ({ open, setOpen }) => {
         method: 'POST'
       });
     const data = await resp.json();
-    setMessage(data.message);
+    setMessage(data.message || 'Error al enviar el correo, revisa los datos que estás enviando');
     setShowMessage(true);
   };
 

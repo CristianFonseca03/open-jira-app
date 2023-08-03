@@ -25,7 +25,6 @@ interface formProps {
 export const LogInForm = () => {
   const { data: session } = useSession();
 
-
   const router = useRouter();
   const [form, setForm] = useState<formProps>({
     email: "",
@@ -51,9 +50,29 @@ export const LogInForm = () => {
   };
 
   const loginUser = async () => {
-    await signIn("credentials", {
-      ...form,
-    });
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/sign-in`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+        method: "POST",
+      }
+    );
+    const data = await resp.json();
+    if (data.success) {
+      setMessage(data.message);
+      setSnackBarStatus("success");
+      /* Si algo falla con el login, es por acá */
+      await signIn("credentials", {
+        ...form,
+      });
+    } else {
+      setSnackBarStatus("error");
+      setMessage(data.message || "Algo falló, revisa tus datos");
+    }
+    setOpen(true);
   };
 
   useEffect(() => {
