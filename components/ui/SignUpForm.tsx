@@ -70,7 +70,7 @@ export const SignUpForm = () => {
       }, 2000);
     } else {
       setSnackBarStatus("error");
-      setMessage(data.message);
+      setMessage(data.message || "Error al crear el usuario");
     }
     setIsLoading(false);
     setOpen(true);
