@@ -21,6 +21,7 @@ interface formProps {
   name: string;
   lastName: string;
   email: string;
+  role: string;
 }
 
 export const SignUpForm = () => {
@@ -28,6 +29,7 @@ export const SignUpForm = () => {
     name: "",
     lastName: "",
     email: "",
+    role: "user",
   });
   const [snackBarStatus, setSnackBarStatus] = useState<AlertColor>("success");
   const [open, setOpen] = useState(false);

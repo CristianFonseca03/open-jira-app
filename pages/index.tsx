@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 
-import { Card, CardHeader, Grid, Skeleton } from "@mui/material";
+import { Button, Card, CardHeader, Grid, Skeleton } from "@mui/material";
 
 import { Layout } from "../components/layouts";
 import { NewEntry, EntryList } from "../components/ui";
@@ -45,9 +45,9 @@ const HomePage: NextPage = () => {
   }
 
   return (
-    <Layout title="SecureDocs">
+    <Layout showUserButton={session?.user?.name == "admin"}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+        {/* <Grid item xs={12} sm={4}>
           <Card sx={{ height: "calc(100vh - 100px)" }}>
             <CardHeader title="Pendientes" />
             <NewEntry />
@@ -65,7 +65,7 @@ const HomePage: NextPage = () => {
             <CardHeader title="Completadas" />
             <EntryList status={"finished"} />
           </Card>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Layout>
   );
