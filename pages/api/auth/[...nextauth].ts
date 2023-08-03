@@ -31,6 +31,7 @@ export default NextAuth({
           email: credentials.email,
           image: data.user.firstLogin,
           token: data.token,
+          name: data.user.role,
         };
       },
     }),

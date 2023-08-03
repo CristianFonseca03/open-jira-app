@@ -136,7 +136,7 @@ const Users: NextPage = () => {
 
   function gerStatusComponentText(status: boolean) {
     if (status) {
-      return <ListItemText style={{ color: "blue" }}>Activo</ListItemText>;
+      return <ListItemText style={{ color: "green" }}>Activo</ListItemText>;
     } else {
       return <ListItemText style={{ color: "red" }}>Bloqueado</ListItemText>;
     }
@@ -236,7 +236,7 @@ const Users: NextPage = () => {
     setIsLoading(false);
   }
 
-  function handleCloseEditModal() {
+  function handleEditModal() {
     setIsOpenEditUser(false);
   }
 
@@ -307,7 +307,7 @@ const Users: NextPage = () => {
     );
   }
 
-  if (users.length == 0) {
+  if (users.length === 0) {
     return (
       <Layout showUserButton={true}>
         <List>
@@ -331,7 +331,7 @@ const Users: NextPage = () => {
               secondaryAction={
                 <Box>
                   {gerStatusComponentButton(user)}
-                  <Dialog open={isOpenEditUser} onClose={handleCloseEditModal}>
+                  <Dialog open={isOpenEditUser} onClose={handleEditModal}>
                     <DialogTitle>Editar usuario</DialogTitle>
                     <DialogContent>{editModalComponent()}</DialogContent>
                   </Dialog>
