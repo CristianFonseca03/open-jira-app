@@ -26,9 +26,7 @@ const HomePage: NextPage = () => {
           },
         }
       );
-      console.log({ tokenResponse } + "tokenResponse");
       const dataToken = await tokenResponse.json();
-      console.log({ dataToken } + "dataToken");
       if (dataToken.success) {
         setIsValidToken(true);
       }
